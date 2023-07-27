@@ -1,126 +1,123 @@
-import { Component } from 'react';
+import { Component, useState, useEffect } from 'react';
 import ModalWindow from './Modal/Modal';
 import Searchbar from './Searchbar/Searchbar';
 import Api from './api/Api';
 import ImageGallery from './ImageGallery/ImageGallery';
 import Button from './Button/Button';
 
-class App extends Component {
-  state = {
-    showModal: false,
-    searchValue: '',
-    response: [],
-    error: '',
-    isLoading: false,
-    page: 1,
-    renderModal: '',
-  };
+const App = function () {
+  const [showModal, setShowModal] = useState(false);
+  const [searchValue, setSearchValue] = useState('');
+  const [response, setResponse] = useState([]);
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [page, setPage] = useState(1);
+  const [renderModal, setRenderModal] = useState('');
 
-  componentDidUpdate(prevProps, prevState) {
-    if (
-      prevState.searchValue === this.state.searchValue ||
-      this.state.searchValue === ''
-    )
-      return;
+  // state = {
+  //   showModal: false,
+  //   searchValue: '',
+  //   response: [],
+  //   error: '',
+  //   isLoading: false,
+  //   page: 1,
+  //   renderModal: '',
+  // };
 
-    this.handleSearch();
-    this.setState({ page: 1 });
-  }
-  handleSearch = async () => {
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (
+  //     prevState.searchValue === this.state.searchValue ||
+  //     this.state.searchValue === ''
+  //   )
+  //     return;
+
+  //   this.handleSearch();
+  //   this.setState({ page: 1 });
+  // }
+
+  useEffect(() => {
+    handleSearch();
+    setPage(1);
+  }, [searchValue]);
+
+  const handleSearch = async () => {
     try {
-      this.setState({ isLoading: true });
+      setIsLoading(true);
       const arr = await Api({
-        value: this.state.searchValue,
-        page: this.state.page,
+        value: searchValue,
+        page: page,
       });
-      this.setState({ response: arr.data.hits });
+      setResponse(arr.data.hits);
     } catch (error) {
-      this.setState({ error: error.message });
+      setError(error.message);
       console.log(error);
     } finally {
-      this.setState({
-        isLoading: false,
-        page: this.state.page + 1,
-      });
+      setIsLoading(false);
+      setPage(prevState => prevState + 1);
     }
   };
 
-  getRequestSearch = data => {
-    this.setState({
-      searchValue: data.search,
-    });
+  const getRequestSearch = data => {
+    setSearchValue(data.search);
   };
-  togleShowModal = () => {
-    this.setState({ showModal: !this.state.showModal });
+  const togleShowModal = () => {
+    setShowModal(!showModal);
   };
-  changePage = async () => {
-    this.setState(prevState => {
-      console.log(prevState.page);
-      return {
-        page: prevState.page,
-      };
-    });
-    await this.handleSearch();
+  const changePage = async () => {
+    //   this.setState(prevState => {
+    //     console.log(prevState.page);
+    //     return {
+    //       page: prevState.page,
+    //     };
+    //   });
+    //   await this.handleSearch();
   };
-  modalContent = largeImageURL => {
+  const modalContent = largeImageURL => {
     if (largeImageURL) {
-      this.setState({
-        showModal: !this.state.showModal,
-        renderModal: largeImageURL,
-      });
+      setShowModal(!showModal);
+      setRenderModal(largeImageURL);
     }
 
     // this.state.response.map();
   };
-  render() {
-    const { error, showModal, response, isLoading } =
-      this.state;
-    return (
-      <div
-        style={{
-          height: '100vh',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          fontSize: 40,
-          color: '#010101',
-        }}
-      >
-        {isLoading && <h2>Загружаем...</h2>}
-        {error && <h2>{error}</h2>}
-        <Searchbar getSearch={this.getRequestSearch} />
-        {showModal && (
-          <ModalWindow onClose={this.togleShowModal}>
-            <img src={this.state.renderModal} alt="" />
-          </ModalWindow>
-        )}
-        {/* {response?.length === 0 && (
+
+  // const { error, showModal, response, isLoading } = this.state;
+  return (
+    <div
+      style={{
+        height: '100vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        fontSize: 40,
+        color: '#010101',
+      }}
+    >
+      {isLoading && <h2>Загружаем...</h2>}
+      {error && <h2>{error}</h2>}
+      <Searchbar getSearch={getRequestSearch} />
+      {showModal && (
+        <ModalWindow onClose={togleShowModal}>
+          <img src={renderModal} alt="" />
+        </ModalWindow>
+      )}
+      {/* {response?.length === 0 && (
           <h2>Search is not found</h2>
         )} */}
-        {response?.map(
-          ({
-            id,
-            pageURL,
-            previewURL,
-            user,
-            largeImageURL,
-          }) => (
-            <ImageGallery
-              key={id}
-              pageURL={pageURL}
-              previewURL={previewURL}
-              user={user}
-              id={id}
-              largeImageURL={largeImageURL}
-              modalContent={this.modalContent}
-            />
-          )
-        )}
-        {response.length !== 0 && (
-          <Button changePage={this.changePage} />
-        )}
-      </div>
-    );
-  }
-}
+      {response?.map(({ id, pageURL, previewURL, user, largeImageURL }) => (
+        <ImageGallery
+          key={id}
+          pageURL={pageURL}
+          previewURL={previewURL}
+          user={user}
+          id={id}
+          largeImageURL={largeImageURL}
+          modalContent={modalContent}
+        />
+      ))}
+      {response.length !== 0 && <Button changePage={changePage} />}
+    </div>
+  );
+};
+
 export default App;
