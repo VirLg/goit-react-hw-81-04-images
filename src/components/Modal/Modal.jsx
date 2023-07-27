@@ -1,35 +1,38 @@
-import { Component } from 'react';
+import { useEffect } from 'react';
 
-class ModalWindow extends Component {
-  componentDidMount() {
-    window.addEventListener('keydown', this.handleCloseEsc);
-  }
+const ModalWindow = function ({ onClose, children }) {
+  // class ModalWindow extends Component {
+  // componentDidMount() {
+  //   window.addEventListener('keydown', this.handleCloseEsc);
+  // }
 
-  componentWillUnmount() {
-    window.removeEventListener(
-      'keydown',
-      this.handleCloseEsc
-    );
-  }
+  // componentWillUnmount() {s
+  //   window.removeEventListener(
+  //     'keydown',
+  //     this.handleCloseEsc
+  //   );
+  // }
 
-  handleCloseEsc = e => {
-    if (e.code === 'Escape') this.props.onClose();
-  };
-  handleCloseOverlay = e => {
+  useEffect(() => {
+    const handleCloseEsc = e => {
+      if (e.code === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleCloseEsc);
+    return () => window.removeEventListener('keydown', handleCloseEsc);
+  }, [onClose]);
+
+  const handleCloseOverlay = e => {
     console.log(e.target);
     console.log(e.currentTarget);
-    if (e.currentTarget === e.target) this.props.onClose();
+    if (e.currentTarget === e.target) onClose();
   };
-  render() {
-    return (
-      <div
-        class="overlay"
-        onClick={this.handleCloseOverlay}
-      >
-        <div class="modal">{this.props.children}</div>
-        <h2>Hello</h2>
-      </div>
-    );
-  }
-}
+
+  return (
+    <div class="overlay" onClick={handleCloseOverlay}>
+      <div class="modal">{children}</div>
+      <h2>Hello</h2>
+    </div>
+  );
+};
+
 export default ModalWindow;
