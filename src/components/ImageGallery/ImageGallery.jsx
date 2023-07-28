@@ -11,7 +11,7 @@ const ImageGallery = ({
   largeImageURL,
 }) => {
   return (
-    <ul>
+    <>
       <ImageItemGallery
         id={id}
         pageURL={pageURL}
@@ -20,7 +20,7 @@ const ImageGallery = ({
         modalContent={modalContent}
         largeImageURL={largeImageURL}
       />
-    </ul>
+    </>
   );
 };
 

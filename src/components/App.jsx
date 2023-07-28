@@ -72,17 +72,19 @@ const App = function () {
         </ModalWindow>
       )}
       {response?.length === 0 && <h2>Search is not found</h2>}
-      {response?.map(({ id, pageURL, previewURL, user, largeImageURL }) => (
-        <ImageGallery
-          key={id}
-          pageURL={pageURL}
-          previewURL={previewURL}
-          user={user}
-          id={id}
-          largeImageURL={largeImageURL}
-          modalContent={modalContent}
-        />
-      ))}
+      <ul>
+        {response?.map(({ id, pageURL, previewURL, user, largeImageURL }) => (
+          <ImageGallery
+            key={id}
+            pageURL={pageURL}
+            previewURL={previewURL}
+            user={user}
+            id={id}
+            largeImageURL={largeImageURL}
+            modalContent={modalContent}
+          />
+        ))}
+      </ul>
       {response.length !== 0 && <Button changePage={changePage} />}
     </div>
   );
