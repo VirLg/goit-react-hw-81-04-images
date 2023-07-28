@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
+import { SearchbarDiv } from './SearchBar.styled';
 
 const Searchbar = function ({ getSearch, resetpage }) {
   const [search, setSearch] = useState('');
@@ -18,7 +19,7 @@ const Searchbar = function ({ getSearch, resetpage }) {
   };
 
   return (
-    <header className="searchbar">
+    <SearchbarDiv className="searchbar">
       <form className="form" onSubmit={handleSubmit}>
         <button type="submit" className="button">
           <span className="button-label">Search</span>
@@ -35,7 +36,7 @@ const Searchbar = function ({ getSearch, resetpage }) {
           placeholder="Search images and photos"
         />
       </form>
-    </header>
+    </SearchbarDiv>
   );
 };
 
