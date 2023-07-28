@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
-import { SearchbarDiv } from './SearchBar.styled';
+import { SearchbarDiv, Form, Input } from './SearchBar.styled';
 
 const Searchbar = function ({ getSearch, resetpage }) {
   const [search, setSearch] = useState('');
@@ -20,12 +20,12 @@ const Searchbar = function ({ getSearch, resetpage }) {
 
   return (
     <SearchbarDiv className="searchbar">
-      <form className="form" onSubmit={handleSubmit}>
+      <Form className="form" onSubmit={handleSubmit}>
         <button type="submit" className="button">
           <span className="button-label">Search</span>
         </button>
 
-        <input
+        <Input
           onChange={handleChange}
           value={search}
           name="search"
@@ -35,7 +35,7 @@ const Searchbar = function ({ getSearch, resetpage }) {
           autoFocus
           placeholder="Search images and photos"
         />
-      </form>
+      </Form>
     </SearchbarDiv>
   );
 };

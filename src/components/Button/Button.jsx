@@ -1,5 +1,4 @@
 const Button = ({ changePage }) => {
-  console.log('changePage', changePage);
   const change = () => {
     changePage();
   };

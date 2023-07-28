@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import ModalWindow from './Modal/Modal';
 import Searchbar from './Searchbar/Searchbar';
 import Api from './api/Api';
@@ -23,6 +24,8 @@ const App = function () {
           value: searchValue,
           page: page,
         });
+        if (arr.data.hits.length === 0)
+          return Notify.failure('Sorry, search is not found.');
         setResponse(arr.data.hits);
       } catch (error) {
         setError(error.message);
@@ -33,18 +36,14 @@ const App = function () {
     };
     handleSearch();
   }, [page, searchValue]);
-  const getRequestSearch = data => {
-    setSearchValue(data);
-  };
-  const togleShowModal = () => {
-    setShowModal(!showModal);
-  };
-  const changePage = async () => {
-    setPage(setPage => setPage + 1);
-  };
-  const resetpage = () => {
-    setPage(1);
-  };
+  const getRequestSearch = data => setSearchValue(data);
+
+  const togleShowModal = () => setShowModal(!showModal);
+
+  const changePage = async () => setPage(setPage => setPage + 1);
+
+  const resetpage = () => setPage(1);
+
   const modalContent = largeImageURL => {
     if (largeImageURL) {
       setShowModal(!showModal);
@@ -56,14 +55,10 @@ const App = function () {
     <div
       style={{
         height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
         fontSize: 40,
         color: '#010101',
       }}
     >
-      {isLoading && <h2>Загружаем...</h2>}
       {error && <h2>{error}</h2>}
       <Searchbar getSearch={getRequestSearch} resetpage={resetpage} />
       {showModal && (
@@ -71,7 +66,7 @@ const App = function () {
           <img src={renderModal} alt="" />
         </ModalWindow>
       )}
-      {response?.length === 0 && <h2>Search is not found</h2>}
+      {/* {response?.length === 0 && <h2>Search is not found</h2>} */}
       <ul>
         {response?.map(({ id, pageURL, previewURL, user, largeImageURL }) => (
           <ImageGallery
@@ -85,6 +80,7 @@ const App = function () {
           />
         ))}
       </ul>
+      {isLoading && <h2>Загружаем...</h2>}
       {response.length !== 0 && <Button changePage={changePage} />}
     </div>
   );
