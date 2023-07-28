@@ -1,19 +1,20 @@
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 
-const Searchbar = function ({ getSearch }) {
+const Searchbar = function ({ getSearch, resetpage }) {
   const [search, setSearch] = useState('');
 
   const handleChange = e => {
     setSearch(e.target.value);
+    if (e.target.value !== search) resetpage();
   };
   const handleSubmit = e => {
     e.preventDefault();
     getSearch(search);
-    reset();
+    // reset();
   };
   const reset = () => {
-    setSearch('');
+    // setSearch('');
   };
 
   return (
