@@ -1,18 +1,7 @@
 import { useEffect } from 'react';
+import { Overlay, ModalWin } from './Modal.styled';
 
 const ModalWindow = function ({ onClose, children }) {
-  // class ModalWindow extends Component {
-  // componentDidMount() {
-  //   window.addEventListener('keydown', this.handleCloseEsc);
-  // }
-
-  // componentWillUnmount() {s
-  //   window.removeEventListener(
-  //     'keydown',
-  //     this.handleCloseEsc
-  //   );
-  // }
-
   useEffect(() => {
     const handleCloseEsc = e => {
       if (e.code === 'Escape') onClose();
@@ -28,10 +17,16 @@ const ModalWindow = function ({ onClose, children }) {
   };
 
   return (
-    <div class="overlay" onClick={handleCloseOverlay}>
-      <div class="modal">{children}</div>
-      <h2>Hello</h2>
-    </div>
+    <Overlay class="overlay" onClick={handleCloseOverlay}>
+      <ModalWin
+        class="modal"
+        style={{
+          height: '500px',
+        }}
+      >
+        {children}
+      </ModalWin>
+    </Overlay>
   );
 };
 

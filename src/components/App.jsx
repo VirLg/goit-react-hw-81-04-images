@@ -42,7 +42,10 @@ const App = function () {
 
   const changePage = async () => setPage(setPage => setPage + 1);
 
-  const resetpage = () => setPage(1);
+  const resetpage = () => {
+    setPage(1);
+    setResponse([]);
+  };
 
   const modalContent = largeImageURL => {
     if (largeImageURL) {
@@ -63,10 +66,17 @@ const App = function () {
       <Searchbar getSearch={getRequestSearch} resetpage={resetpage} />
       {showModal && (
         <ModalWindow onClose={togleShowModal}>
-          <img src={renderModal} alt="" />
+          <img
+            src={renderModal}
+            alt=""
+            style={{
+              height: '100%',
+
+              // margin-right: 'auto',
+            }}
+          />
         </ModalWindow>
       )}
-      {/* {response?.length === 0 && <h2>Search is not found</h2>} */}
       <ul>
         {response?.map(({ id, pageURL, previewURL, user, largeImageURL }) => (
           <ImageGallery
