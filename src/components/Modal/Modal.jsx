@@ -20,9 +20,9 @@ const ModalWindow = function ({ onClose, children }) {
     <Overlay class="overlay" onClick={handleCloseOverlay}>
       <ModalWin
         class="modal"
-        style={{
-          height: '500px',
-        }}
+        // style={{
+        //   height: '500px',
+        // }}
       >
         {children}
       </ModalWin>

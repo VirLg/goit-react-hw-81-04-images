@@ -1,3 +1,5 @@
+import { Img, ImgItemLi } from './ImageItemGallery.styled';
+
 const ImageItemGallery = ({
   id,
   pageURL,
@@ -11,9 +13,9 @@ const ImageItemGallery = ({
     modalContent(value);
   };
   return (
-    <li key={id} onClick={() => returnId(largeImageURL)}>
-      <img src={previewURL} alt={user} />
-    </li>
+    <ImgItemLi key={id} onClick={() => returnId(largeImageURL)}>
+      <Img src={previewURL} alt={user} />
+    </ImgItemLi>
   );
 };
 export default ImageItemGallery;

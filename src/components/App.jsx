@@ -5,6 +5,7 @@ import Searchbar from './Searchbar/Searchbar';
 import Api from './api/Api';
 import ImageGallery from './ImageGallery/ImageGallery';
 import Button from './Button/Button';
+import { Ul, AppDiv } from './App.styled';
 
 const App = function () {
   const [showModal, setShowModal] = useState(false);
@@ -55,7 +56,7 @@ const App = function () {
   };
 
   return (
-    <div
+    <AppDiv
       style={{
         height: '100vh',
         fontSize: 40,
@@ -77,7 +78,7 @@ const App = function () {
           />
         </ModalWindow>
       )}
-      <ul>
+      <Ul>
         {response?.map(({ id, pageURL, previewURL, user, largeImageURL }) => (
           <ImageGallery
             key={id}
@@ -89,10 +90,10 @@ const App = function () {
             modalContent={modalContent}
           />
         ))}
-      </ul>
+      </Ul>
       {isLoading && <h2>Загружаем...</h2>}
       {response.length !== 0 && <Button changePage={changePage} />}
-    </div>
+    </AppDiv>
   );
 };
 
