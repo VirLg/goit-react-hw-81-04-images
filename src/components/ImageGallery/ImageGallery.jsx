@@ -27,3 +27,11 @@ const ImageGallery = ({
 ImageGallery.propTypes = {};
 
 export default ImageGallery;
+ImageGallery.propTypes = {
+  id: PropTypes.number,
+  pageURL: PropTypes.string,
+  previewURL: PropTypes.string,
+  user: PropTypes.string,
+  modalContent: PropTypes.func,
+  largeImageURL: PropTypes.string,
+};

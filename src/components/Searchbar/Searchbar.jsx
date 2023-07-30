@@ -14,9 +14,6 @@ const Searchbar = function ({ getSearch, resetpage }) {
     getSearch(search);
     // reset();
   };
-  const reset = () => {
-    // setSearch('');
-  };
 
   return (
     <SearchbarDiv className="searchbar">
@@ -41,3 +38,7 @@ const Searchbar = function ({ getSearch, resetpage }) {
 };
 
 export default Searchbar;
+Searchbar.propTypes = {
+  getSearch: PropTypes.func,
+  resetpage: PropTypes.func,
+};

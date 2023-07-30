@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 const Button = ({ changePage }) => {
   const change = () => {
     changePage();
@@ -9,3 +10,6 @@ const Button = ({ changePage }) => {
   );
 };
 export default Button;
+Button.propTypes = {
+  changePage: PropTypes.func,
+};
