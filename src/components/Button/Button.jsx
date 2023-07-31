@@ -5,7 +5,16 @@ const Button = ({ changePage }) => {
   };
   return (
     <>
-      <button onClick={change}>Load More!!!!!!!!!!!!</button>
+      <button
+        onClick={change}
+        style={{
+          marginLeft: 'auto',
+          marginRight: 'auto',
+          display: 'block',
+        }}
+      >
+        Load More!!!!!!!!!!!!
+      </button>
     </>
   );
 };

@@ -15,7 +15,7 @@ const App = function () {
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [renderModal, setRenderModal] = useState('');
-
+  const [renderLoadMore, setRenderLoadMore] = useState(false);
   useEffect(() => {
     if (searchValue === '') return;
     const handleSearch = async () => {
@@ -25,9 +25,13 @@ const App = function () {
           value: searchValue,
           page: page,
         });
+        arr.data.hits.length > 10
+          ? setRenderLoadMore(true)
+          : setRenderLoadMore(false);
+
         if (arr.data.hits.length === 0)
           return Notify.failure('Sorry, search is not found.');
-        setResponse(arr.data.hits);
+        setResponse([...response, ...arr.data.hits]);
       } catch (error) {
         setError(error.message);
         console.log(error);
@@ -92,7 +96,7 @@ const App = function () {
         ))}
       </Ul>
       {isLoading && <h2>Загружаем...</h2>}
-      {response.length !== 0 && <Button changePage={changePage} />}
+      {renderLoadMore && <Button changePage={changePage} />}
     </AppDiv>
   );
 };
