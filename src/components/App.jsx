@@ -31,7 +31,7 @@ const App = function () {
 
         if (arr.data.hits.length === 0)
           return Notify.failure('Sorry, search is not found.');
-        setResponse([...response, ...arr.data.hits]);
+        setResponse(prev => [...prev, ...arr.data.hits]);
       } catch (error) {
         setError(error.message);
         console.log(error);
