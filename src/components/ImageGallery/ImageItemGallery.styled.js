@@ -3,6 +3,8 @@ export const Img = styled.img`
   display: block;
   max-width: 100%;
   height: auto;
+  width: 270px;
+  height: 150px;
 `;
 
 export const ImgItemLi = styled.div`

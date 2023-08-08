@@ -2,16 +2,20 @@ import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { SearchbarDiv, Form, Input } from './SearchBar.styled';
 
-const Searchbar = function ({ getSearch, resetpage }) {
+const Searchbar = function ({ getSearch, resetpage, setRenderLoadMore }) {
   const [search, setSearch] = useState('');
 
   const handleChange = e => {
     setSearch(e.target.value);
-    if (e.target.value !== search) resetpage();
+    if (e.target.value === '') setRenderLoadMore(false);
   };
   const handleSubmit = e => {
     e.preventDefault();
-    getSearch(search);
+    if (e.target.value !== search) {
+      resetpage();
+      getSearch(search);
+    }
+
     // reset();
   };
 

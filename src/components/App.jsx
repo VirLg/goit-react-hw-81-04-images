@@ -68,7 +68,11 @@ const App = function () {
       }}
     >
       {error && <h2>{error}</h2>}
-      <Searchbar getSearch={getRequestSearch} resetpage={resetpage} />
+      <Searchbar
+        getSearch={getRequestSearch}
+        resetpage={resetpage}
+        setRenderLoadMore={setRenderLoadMore}
+      />
       {showModal && (
         <ModalWindow onClose={togleShowModal}>
           <img
